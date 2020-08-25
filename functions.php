@@ -7,6 +7,23 @@ function followmax_theme_support() {
 
 add_action('after_setup_theme', 'followmax_theme_support');
 
+function followmax_menus() {
+    $locations = array(
+        'primary' => "Descktop Primary Left Sidebar",
+        'footer' => "Footer Menu Ittems"
+    );
+
+    register_nav_menus($locations);
+}
+
+add_action('init', 'followmax_menus');
+
+function add_menuclass($ulclass) {
+    return preg_replace('/<a /', '<a class="nav-link"', $ulclass);
+}
+
+add_filter('wp_nav_menu', 'add_menuclass');
+
 function followmax_register_styles() {
     $version = wp_get_theme()->get('Version');
     wp_enqueue_style('followmax-style', get_template_directory_uri() . "/assets/css/style.css", array('followmax-bootstrap'), $version, 'all');
